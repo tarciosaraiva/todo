@@ -1,0 +1,27 @@
+# Todos
+projects:
+    - !!org.tarciosaraiva.todo.domain.Project
+        id:     1
+        name:   MelbJVM
+        due:    2013-10-01
+        todos:
+          - !!org.tarciosaraiva.todo.domain.Todo
+              id:     1
+              action: Prepare boilerplate
+              project: !!org.tarciosaraiva.todo.domain.Project
+                         id: 1
+          - !!org.tarciosaraiva.todo.domain.Todo
+              id:     1
+              action: Push to Github
+              project: !!org.tarciosaraiva.todo.domain.Project
+                         id: 1
+          - !!org.tarciosaraiva.todo.domain.Todo
+              id:     3
+              action: Present to eager audience
+              project: !!org.tarciosaraiva.todo.domain.Project
+                         id: 1
+          - !!org.tarciosaraiva.todo.domain.Todo
+              id:     4
+              action: Bow to standing ovation
+              project: !!org.tarciosaraiva.todo.domain.Project
+                         id: 1

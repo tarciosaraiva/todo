@@ -1,0 +1,90 @@
+defaultTasks 'flywayMigrate'
+
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+sourceCompatibility = 1.6
+version = "1.0-SNAPSHOT"
+
+configurations.all {
+    exclude group: 'commons-logging'
+    exclude module: 'slf4j-log4j12'
+    exclude module: 'servlet-api'
+}
+
+configurations {
+    flyway
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.springsource.org/libs-snapshot" }
+    maven { url "http://repo.springsource.org/libs-milestone" }
+    maven { url "http://repo.springsource.org/libs-release" }
+}
+
+task flywayMigrate(dependsOn: build) << {
+    ext.flyway_classpath = files(sourceSets.main.output.resourcesDir) + files(configurations.flyway)
+
+    ant.taskdef(name: 'flywayMigrate', classname: 'com.googlecode.flyway.ant.MigrateTask', classpath: ext.flyway_classpath.asPath)
+    ant.flywayMigrate(
+            driver: 'org.postgresql.Driver',
+            url: 'jdbc:postgresql://localhost/todo',
+            user: 'todo',
+            password: 't0d0')
+}
+
+dependencies {
+
+    compile group: 'org.yaml', name: 'snakeyaml', version: snakeYamlVersion
+
+    flyway group: 'postgresql', name: 'postgresql', version: postgresqlVersion
+    flyway group: 'com.googlecode.flyway', name: 'flyway-ant', version: flywayVersion
+
+    // Spring
+    compile group: 'org.springframework', name: 'spring-aop', version: springVersion
+    compile group: 'org.springframework', name: 'spring-beans', version: springVersion
+    compile group: 'org.springframework', name: 'spring-core', version: springVersion
+    compile group: 'org.springframework', name: 'spring-context', version: springVersion
+    compile group: 'org.springframework', name: 'spring-tx', version: springVersion
+    compile group: 'org.springframework', name: 'spring-orm', version: springVersion
+    compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
+    compile group: 'org.springframework', name: 'spring-web', version: springVersion
+    compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
+    compile group: 'org.springframework', name: 'spring-context-support', version: springVersion
+
+    // Spring Data
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: springDataJpaVersion
+    compile group: 'org.springframework.data', name: 'spring-data-rest-webmvc', version: springDataRestVersion
+
+    // Hibernate + JPA
+    compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: hibernateValidatorVersion
+    runtime group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.0-api', version: jpa2Version
+
+    // Logging + Groovy
+    compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+    runtime group: 'org.slf4j', name: 'jcl-over-slf4j', version: slf4jVersion
+    runtime group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+    runtime group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion
+
+    // Supporting libraries
+    compile group: 'commons-lang', name: 'commons-lang', version: commonsLangVersion
+    compile group: 'com.google.guava', name: 'guava', version: guavaVersion
+    compile group: 'postgresql', name: 'postgresql', version: postgresqlVersion
+    compile group: 'org.codehaus.jackson', name: 'jackson-core-lgpl', version: jacksonVersion
+    compile group: 'org.codehaus.jackson', name: 'jackson-mapper-lgpl', version: jacksonVersion
+    compile group: 'net.sf.ehcache', name: 'ehcache-core', version: ehcacheVersion
+    compile group: 'c3p0', name: 'c3p0', version: c3p0Version
+    compile group: 'joda-time', name: 'joda-time', version: jodaVersion
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletVersion
+
+    // Testing libraries
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.mockito', name: 'mockito-all', version: mockitoVersion
+    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: powermockVersion
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito', version: powermockVersion
+    testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+
+}
