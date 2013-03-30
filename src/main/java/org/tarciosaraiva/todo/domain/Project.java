@@ -1,34 +1,26 @@
 package org.tarciosaraiva.todo.domain;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Project implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column
-	@NotEmpty
-	@Size(min = 3, max = 80)
 	private String name;
 
-	@Future
 	@Column
-	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date due;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "project")
-	private Set<Todo> todos;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Task> tasks;
 
 	public Long getId() {
 		return id;
@@ -54,12 +46,12 @@ public class Project implements Serializable {
 		this.due = due;
 	}
 
-	public Set<Todo> getTodos() {
-		return todos;
+	public List<Task> getTasks() {
+		return tasks;
 	}
 
-	public void setTodos(Set<Todo> todos) {
-		this.todos = todos;
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	@Override
@@ -69,9 +61,7 @@ public class Project implements Serializable {
 
 		Project project = (Project) o;
 
-		if (id != null ? !id.equals(project.id) : project.id != null) return false;
-
-		return true;
+		return !(id != null ? !id.equals(project.id) : project.id != null);
 	}
 
 	@Override

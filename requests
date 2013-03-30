@@ -1,0 +1,11 @@
+post --rel project --data "{ 'name':'Project 1', 'due':'2013-04-15' }"
+post --rel project --data "{ 'name':'Project 2', 'due':'2013-03-15' }"
+post --rel project --data "{ 'due':'2013-05-15' }"
+post --rel project --data "{ 'name':'MelbJVM', 'due':'2013-04-04', tasks: [ { 'action':'Write this preso!', 'completed': true } ] }"
+post --rel project --data "{ 'name':'House', 'due':'2013-05-29', tasks: [ {'action': 'Pay the bank!', 'completed': true}, { 'action':'Pack up!', 'completed': false } ] }"
+post --rel project --data "{ 'name':'Work', 'due':'2099-12-31', tasks: [ {'action': 'Do more!', 'completed': false} ] }"
+post --rel project --data "{ 'name':'Birthday', 'due':'2013-04-15', tasks: [ {'action': 'Organize venue', 'completed': false}, {'action':'Invite guests','completed':false},{'action':'Drink my a** off','completed':false} ] }"
+post --rel project --data "{ 'name':'Project 2', 'due': '2013-06-01', 'tasks': [ {'action':'Task 1', 'completed': true}, {'action':'Task 2', 'completed': false} ] }"
+
+put --rel project/1 --data "{ 'due':'2013-05-29' }"
+put --rel project/1 --data "{ 'tasks': [ {'action':'Task 4', 'completed': true}, {'action':'Task 3', 'completed': false} ] }"

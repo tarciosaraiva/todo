@@ -4,7 +4,7 @@
 >
     <persistence-unit name="todo" transaction-type="RESOURCE_LOCAL">
         <class>org.tarciosaraiva.todo.domain.Project</class>
-        <class>org.tarciosaraiva.todo.domain.Todo</class>
+        <class>org.tarciosaraiva.todo.domain.Task</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>

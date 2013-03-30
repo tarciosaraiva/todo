@@ -1,30 +1,20 @@
 package org.tarciosaraiva.todo.domain;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Todo implements Serializable {
+public class Task implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column
-	@NotEmpty
 	private String action;
 
 	@Column
-	@NotNull
 	private boolean completed = false;
-
-	@ManyToOne(optional = false)
-	private Project project;
 
 	public Long getId() {
 		return id;
@@ -50,28 +40,24 @@ public class Todo implements Serializable {
 		this.completed = completed;
 	}
 
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof Todo)) return false;
+		if (!(o instanceof Task)) return false;
 
-		Todo todo = (Todo) o;
+		Task task = (Task) o;
 
-		if (id != null ? !id.equals(todo.id) : todo.id != null) return false;
+		if (completed != task.completed) return false;
+		if (action != null ? !action.equals(task.action) : task.action != null) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
+		int result = action != null ? action.hashCode() : 0;
+		result = 31 * result + (completed ? 1 : 0);
+		return result;
 	}
+
 }
