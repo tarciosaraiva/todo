@@ -61,11 +61,16 @@ public class Project implements Serializable {
 
 		Project project = (Project) o;
 
-		return !(id != null ? !id.equals(project.id) : project.id != null);
+		if (due != null ? !due.equals(project.due) : project.due != null) return false;
+		if (name != null ? !name.equals(project.name) : project.name != null) return false;
+
+		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
+		int result = name != null ? name.hashCode() : 0;
+		result = 31 * result + (due != null ? due.hashCode() : 0);
+		return result;
 	}
 }

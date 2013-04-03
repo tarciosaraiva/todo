@@ -11,7 +11,7 @@ public class Task implements Serializable {
 	private Long id;
 
 	@Column
-	private String action;
+	private String description;
 
 	@Column
 	private boolean completed = false;
@@ -24,12 +24,12 @@ public class Task implements Serializable {
 		this.id = id;
 	}
 
-	public String getAction() {
-		return action;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public boolean isCompleted() {
@@ -48,14 +48,14 @@ public class Task implements Serializable {
 		Task task = (Task) o;
 
 		if (completed != task.completed) return false;
-		if (action != null ? !action.equals(task.action) : task.action != null) return false;
+		if (description != null ? !description.equals(task.description) : task.description != null) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = action != null ? action.hashCode() : 0;
+		int result = description != null ? description.hashCode() : 0;
 		result = 31 * result + (completed ? 1 : 0);
 		return result;
 	}

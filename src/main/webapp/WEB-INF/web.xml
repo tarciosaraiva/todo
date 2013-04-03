@@ -11,11 +11,6 @@
     </session-config>
 
     <context-param>
-        <description>Enable debugging for the application</description>
-        <param-name>debug</param-name>
-        <param-value>true</param-value>
-    </context-param>
-    <context-param>
         <description>The email address of the administrator, used to send error reports.</description>
         <param-name>webmaster</param-name>
         <param-value>tarcio@gmail.com</param-value>
